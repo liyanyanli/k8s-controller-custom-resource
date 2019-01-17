@@ -19,13 +19,13 @@ limitations under the License.
 package v1
 
 import (
-	internalinterfaces "github.com/trstringer/k8s-controller-custom-resource/pkg/client/informers/externalversions/internalinterfaces"
+	internalinterfaces "github.com/liyanyanli/k8s-controller-custom-resource/pkg/client/informers/externalversions/internalinterfaces"
 )
 
 // Interface provides access to all the informers in this group version.
 type Interface interface {
-	// MyResources returns a MyResourceInformer.
-	MyResources() MyResourceInformer
+	// Democrds returns a DemocrdInformer.
+	Democrds() DemocrdInformer
 }
 
 type version struct {
@@ -39,7 +39,7 @@ func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakList
 	return &version{factory: f, namespace: namespace, tweakListOptions: tweakListOptions}
 }
 
-// MyResources returns a MyResourceInformer.
-func (v *version) MyResources() MyResourceInformer {
-	return &myResourceInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+// Democrds returns a DemocrdInformer.
+func (v *version) Democrds() DemocrdInformer {
+	return &democrdInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

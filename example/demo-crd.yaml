@@ -1,0 +1,7 @@
+apiVersion: democrd.k8s.io/v1
+kind: Democrd
+metadata:
+  name:demo-crd-name
+spec:
+  v1: "key1"
+  v2: "key2"

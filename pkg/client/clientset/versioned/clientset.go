@@ -19,7 +19,7 @@ limitations under the License.
 package versioned
 
 import (
-	trstringerv1 "github.com/trstringer/k8s-controller-custom-resource/pkg/client/clientset/versioned/typed/myresource/v1"
+	democrdv1 "github.com/liyanyanli/k8s-controller-custom-resource/pkg/client/clientset/versioned/typed/democrd/v1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"
@@ -27,27 +27,27 @@ import (
 
 type Interface interface {
 	Discovery() discovery.DiscoveryInterface
-	TrstringerV1() trstringerv1.TrstringerV1Interface
+	DemocrdV1() democrdv1.DemocrdV1Interface
 	// Deprecated: please explicitly pick a version if possible.
-	Trstringer() trstringerv1.TrstringerV1Interface
+	Democrd() democrdv1.DemocrdV1Interface
 }
 
 // Clientset contains the clients for groups. Each group has exactly one
 // version included in a Clientset.
 type Clientset struct {
 	*discovery.DiscoveryClient
-	trstringerV1 *trstringerv1.TrstringerV1Client
+	democrdV1 *democrdv1.DemocrdV1Client
 }
 
-// TrstringerV1 retrieves the TrstringerV1Client
-func (c *Clientset) TrstringerV1() trstringerv1.TrstringerV1Interface {
-	return c.trstringerV1
+// DemocrdV1 retrieves the DemocrdV1Client
+func (c *Clientset) DemocrdV1() democrdv1.DemocrdV1Interface {
+	return c.democrdV1
 }
 
-// Deprecated: Trstringer retrieves the default version of TrstringerClient.
+// Deprecated: Democrd retrieves the default version of DemocrdClient.
 // Please explicitly pick a version.
-func (c *Clientset) Trstringer() trstringerv1.TrstringerV1Interface {
-	return c.trstringerV1
+func (c *Clientset) Democrd() democrdv1.DemocrdV1Interface {
+	return c.democrdV1
 }
 
 // Discovery retrieves the DiscoveryClient
@@ -66,7 +66,7 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 	}
 	var cs Clientset
 	var err error
-	cs.trstringerV1, err = trstringerv1.NewForConfig(&configShallowCopy)
+	cs.democrdV1, err = democrdv1.NewForConfig(&configShallowCopy)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 // panics if there is an error in the config.
 func NewForConfigOrDie(c *rest.Config) *Clientset {
 	var cs Clientset
-	cs.trstringerV1 = trstringerv1.NewForConfigOrDie(c)
+	cs.democrdV1 = democrdv1.NewForConfigOrDie(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClientForConfigOrDie(c)
 	return &cs
@@ -91,7 +91,7 @@ func NewForConfigOrDie(c *rest.Config) *Clientset {
 // New creates a new Clientset for the given RESTClient.
 func New(c rest.Interface) *Clientset {
 	var cs Clientset
-	cs.trstringerV1 = trstringerv1.New(c)
+	cs.democrdV1 = democrdv1.New(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClient(c)
 	return &cs
